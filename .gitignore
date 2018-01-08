@@ -1,0 +1,8 @@
+# Binary executable
+conndict
+
+# Secret values
+secrets.go
+
+# vim
+.*.swp
