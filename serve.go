@@ -9,20 +9,22 @@ import (
 
 var templates = template.Must(template.ParseFiles("view.html"))
 
+// strip is http.StripPrefix for funcs instead of http.Handlers
 func strip(prefix string, handler func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
-
 	return func(w http.ResponseWriter, r *http.Request) {
 		r.URL.Path = r.URL.Path[len(prefix):]
 		handler(w, r)
 	}
 }
 
+// redirect is http.RedirectHandler for funcs instead of http.Handlers
 func redirect(url string, status int) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, url, status)
 	}
 }
 
+// viewHandler is for the main page where a user explores the dictionary
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	// URL.Path should contain the start word.
 	// Ideally "/view/dictionary" starts with the word "dictionary".
@@ -30,6 +32,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+// definitionHandler makes the definition getting abstract for the JavaScript
 func definitionHandler(w http.ResponseWriter, r *http.Request) {
 	jsonErr := func(err error) {
 		fmt.Fprintf(w, "{\"error\":\"%s\"}", err)
