@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/xml"
-	"net/http"
 	"errors"
+	"net/http"
 )
 
 // Note that APIKEY is defined elsewhere and not uploaded.
