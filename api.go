@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/xml"
 	"net/http"
+	"errors"
 )
 
 // Note that APIKEY is defined elsewhere and not uploaded.
@@ -10,7 +11,11 @@ const (
 	APIURL = "https://www.dictionaryapi.com/api/v1/references/collegiate/xml/"
 )
 
-func Definition(word string) ([]string, error) {
+var (
+	NoDefinitionsError = errors.New("No definitions found")
+)
+
+func Definitions(word string) ([]string, error) {
 	// Download the raw xml data
 	resp, err := http.Get(APIURL + word + "?key=" + APIKEY)
 	if err != nil {
@@ -28,6 +33,11 @@ func Definition(word string) ([]string, error) {
 	err = dec.Decode(v)
 	if err != nil {
 		return nil, err
+	}
+
+	// Check that there was a result
+	if len(v.Definitions) == 0 {
+		return nil, NoDefinitionsError
 	}
 
 	return v.Definitions, nil
