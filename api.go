@@ -24,7 +24,7 @@ func Definitions(word string) ([]string, error) {
 
 	// API result's format
 	type Response struct {
-		Definitions []string `xml:"entry>def>dt>un"`
+		Definitions []string `xml:"entry>def>dt"`
 	}
 
 	// Parse out the defintions from the xml
