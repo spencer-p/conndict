@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"html/template"
 	"net/http"
 )
@@ -66,7 +67,8 @@ func serve() {
 	http.HandleFunc("/view/", strip("/view/", viewHandler))
 	http.HandleFunc("/", redirect("/view/", http.StatusFound))
 	http.HandleFunc("/def/", strip("/def/", definitionHandler))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// Serve forever
-	http.ListenAndServe(":8000", nil)
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }

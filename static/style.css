@@ -1,0 +1,17 @@
+#parent {
+	display: flex;
+	height: 100%;
+}
+
+#info-column {
+	width: 10%;
+	margin: 10px;
+	display: flex;
+	flex-flow: column;
+	justify-content: space-between;
+}
+
+#graph {
+	width: 100%;
+	height: 100%;
+}
